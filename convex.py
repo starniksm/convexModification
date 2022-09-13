@@ -16,9 +16,6 @@ class Figure:
     def min_d(self):
         return 0.0
 
-    def lst(self):
-        return 0
-
 
 class Void(Figure):
     """ "Hульугольник" """
