@@ -60,6 +60,7 @@ class Polygon(Figure):
     def __init__(self, a, b, c):
         self.points = Deq()
         self.points.push_first(b)
+        self.diagonals_list = []
         if b.is_light(a, c):
             self.points.push_first(a)
             self.points.push_last(c)
@@ -78,15 +79,12 @@ class Polygon(Figure):
     def min_d(self):
         if self.points.size() > 3:
             mi = min(self.diagonals_list)
-            self.diagonals_list.clear()
             return mi
         else:
             return 0.0
 
     # добавление новой точки
     def add(self, t):
-
-        diagonals_list = []
 
         # поиск освещённого ребра
         for n in range(self.points.size()):
@@ -102,12 +100,16 @@ class Polygon(Figure):
             self._area += abs(R2Point.area(t,
                                            self.points.last(),
                                            self.points.first()))
+            self.diagonals_list.append(self.points.first().dist(self.points.last()))
 
             # удаление освещённых рёбер из начала дека
             p = self.points.pop_first()
             while t.is_light(p, self.points.first()):
                 self._perimeter -= p.dist(self.points.first())
                 self._area += abs(R2Point.area(t, p, self.points.first()))
+                for j in range(self.points.size() - 1):
+                    if p.dist(self.points.medium(j)) in self.diagonals_list:
+                        self.diagonals_list.remove(p.dist(self.points.medium(j)))
                 p = self.points.pop_first()
             self.points.push_first(p)
 
@@ -116,6 +118,9 @@ class Polygon(Figure):
             while t.is_light(self.points.last(), p):
                 self._perimeter -= p.dist(self.points.last())
                 self._area += abs(R2Point.area(t, p, self.points.last()))
+                for i in range(self.points.size() - 1):
+                    if p.dist(self.points.medium(i)) in self.diagonals_list:
+                        self.diagonals_list.remove(p.dist(self.points.medium(i)))
                 p = self.points.pop_last()
             self.points.push_last(p)
 
@@ -124,12 +129,18 @@ class Polygon(Figure):
                                t.dist(self.points.last())
             self.points.push_first(t)
 
-        for n in range(self.points.size()):
-            for j in range(n, self.points.size()):
-                if n != j and abs(n - j) > 1 and abs(n - j) < self.points.size() - 1:
-                    self.diagonals_list.append(
-                        self.points.medium(n).dist(self.points.medium(j)))
+            for w in range(2, self.points.size() - 1):
+                self.diagonals_list.append(t.dist(self.points.medium(w)))
 
+        if self.points.size() == 4:
+            self.diagonals_list.clear()
+            for n in range(self.points.size()):
+                for j in range(n, self.points.size()):
+                    if n != j and 1 < abs(n - j) < self.points.size() - 1:
+                        self.diagonals_list.append(
+                            self.points.medium(n).dist(self.points.medium(j)))
+
+        print(self.diagonals_list)
         return self
 
 

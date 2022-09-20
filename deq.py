@@ -41,6 +41,9 @@ class Deq:
     def medium(self, w):
         return self.array[w]
 
+    def delete(self, q):
+        return self.array.remove(q)
+
 
 if __name__ == "__main__":
     s = Deq()
