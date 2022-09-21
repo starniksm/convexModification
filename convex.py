@@ -5,8 +5,6 @@ from r2point import R2Point
 class Figure:
     """ Абстрактная фигура """
 
-    diagonals_list = []
-
     def perimeter(self):
         return 0.0
 
