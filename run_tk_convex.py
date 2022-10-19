@@ -1,7 +1,8 @@
 #!/usr/bin/env -S python3 -B
-from tk_drawer import TkDrawer
-from r2point import R2Point
 from convex import Void, Point, Segment, Polygon
+from r2point import R2Point
+from tk_drawer import TkDrawer
+from deq import Deq
 
 
 def void_draw(self, tk):
@@ -20,6 +21,9 @@ def polygon_draw(self, tk):
     for n in range(self.points.size()):
         tk.draw_line(self.points.last(), self.points.first())
         self.points.push_last(self.points.pop_first())
+        for r in range(2, self.points.size() - 1):
+            if self.points.first().dist(self.points.medium(r)) == self.min_d():
+                tk.draw_line(self.points.first(), self.points.medium(r))
 
 
 setattr(Void, 'draw', void_draw)

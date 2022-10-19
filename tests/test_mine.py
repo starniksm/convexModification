@@ -49,13 +49,7 @@ class TestPolygon2:
         assert self.f.add(R2Point(1.0, -1.0)).min_d() == approx(3.0)
 
     def test_min_d6(self):
-        assert self.f.add(R2Point(-1.0, 0.0)).min_d() == approx(4.0)
-
-    def test_min_d7(self):
         assert self.f.add(R2Point(-3.0, 2.0)).min_d() == approx(4.0)
-
-    def test_min_d8(self):
-        assert self.f.add(R2Point(3.0, 3.0)).min_d() == approx(4.0)
 
 
 class TestPolygon3:
@@ -67,8 +61,8 @@ class TestPolygon3:
                 3.0, 1.0), R2Point(
                 2.0, -1.0))
 
-    def test_min_d9(self):
+    def test_min_d7(self):
         assert self.f.add(R2Point(-2.0, -2.0)).min_d() == approx(sqrt(32))
 
-    def test_min_d10(self):
+    def test_min_d8(self):
         assert self.f.add(R2Point(1.0, 3.0)).min_d() == approx(sqrt(17))

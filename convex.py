@@ -5,8 +5,6 @@ from r2point import R2Point
 class Figure:
     """ Абстрактная фигура """
 
-    diagonals_list = []
-
     def perimeter(self):
         return 0.0
 
@@ -107,9 +105,8 @@ class Polygon(Figure):
             while t.is_light(p, self.points.first()):
                 self._perimeter -= p.dist(self.points.first())
                 self._area += abs(R2Point.area(t, p, self.points.first()))
-                for j in range(self.points.size() - 1):
-                    if p.dist(self.points.medium(j)) in self.diagonals_list:
-                        self.diagonals_list.remove(p.dist(self.points.medium(j)))
+                for j in range(1, self.points.size()):
+                    self.diagonals_list.remove(p.dist(self.points.medium(j)))
                 p = self.points.pop_first()
             self.points.push_first(p)
 
@@ -118,9 +115,8 @@ class Polygon(Figure):
             while t.is_light(self.points.last(), p):
                 self._perimeter -= p.dist(self.points.last())
                 self._area += abs(R2Point.area(t, p, self.points.last()))
-                for i in range(self.points.size() - 1):
-                    if p.dist(self.points.medium(i)) in self.diagonals_list:
-                        self.diagonals_list.remove(p.dist(self.points.medium(i)))
+                for i in range(0, self.points.size() - 1):
+                    self.diagonals_list.remove(p.dist(self.points.medium(i)))
                 p = self.points.pop_last()
             self.points.push_last(p)
 
@@ -140,7 +136,6 @@ class Polygon(Figure):
                         self.diagonals_list.append(
                             self.points.medium(n).dist(self.points.medium(j)))
 
-        print(self.diagonals_list)
         return self
 
 
