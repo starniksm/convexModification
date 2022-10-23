@@ -23,7 +23,7 @@ def polygon_draw(self, tk):
         self.points.push_last(self.points.pop_first())
         for r in range(2, self.points.size() - 1):
             if self.points.first().dist(self.points.medium(r)) == self.min_d():
-                tk.draw_line(self.points.first(), self.points.medium(r))
+                tk.draw_diagonal(self.points.first(), self.points.medium(r))
 
 
 setattr(Void, 'draw', void_draw)

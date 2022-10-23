@@ -128,14 +128,6 @@ class Polygon(Figure):
             for w in range(2, self.points.size() - 1):
                 self.diagonals_list.append(t.dist(self.points.medium(w)))
 
-        if self.points.size() == 4:
-            self.diagonals_list.clear()
-            for n in range(self.points.size()):
-                for j in range(n, self.points.size()):
-                    if n != j and 1 < abs(n - j) < self.points.size() - 1:
-                        self.diagonals_list.append(
-                            self.points.medium(n).dist(self.points.medium(j)))
-
         return self
 
 
